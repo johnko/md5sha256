@@ -45,6 +45,7 @@ def md5foldersha256file( data, output_base_path='.' ):
             md5_is_next = False
         elif sha256_is_next:
             output = "-".join( [ output, i ] )
+            sha256_is_next = False
         else:
             output = os.sep.join( [ output, i ] )
         if i == "md5": md5_is_next = True
