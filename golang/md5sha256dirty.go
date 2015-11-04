@@ -59,7 +59,7 @@ func md5foldersha256file(filepath string, md5_path string, sha256_path string, o
 			// split hash to pairs
 			pairs := regexp.MustCompile("[0-9a-f]{2}").FindAll([]byte(dash_array[i]), -1)
 			md5_as_path := path.Join(string(bytes.Join(pairs, []byte(string(os.PathSeparator)))))
-			output = path.Join(output, md5_as_path)
+			output = path.Join(output, md5_as_path, dash_array[i])
 			md5_is_next = false
 		} else if sha256_is_next {
 			output = output + "-" + dash_array[i]
