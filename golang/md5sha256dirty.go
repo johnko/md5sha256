@@ -64,13 +64,12 @@ func md5foldersha256file(filepath string, md5_path string, sha256_path string, o
 		} else if sha256_is_next {
 			output = output + "-" + dash_array[i]
 			sha256_is_next = false
-		} else {
-			output = path.Join(output, dash_array[i])
-		}
-		if dash_array[i] == "md5" {
+		} else if dash_array[i] == "md5" {
 			md5_is_next = true
 		} else if dash_array[i] == "sha256" {
 			sha256_is_next = true
+		} else {
+			output = path.Join(output, dash_array[i])
 		}
 	}
 	return
