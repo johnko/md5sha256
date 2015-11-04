@@ -46,12 +46,12 @@ def md5foldersha256file( data, output_base_path='.' ):
         elif sha256_is_next:
             output = "-".join( [ output, i ] )
             sha256_is_next = False
-        elif i == "md5": pass
-        elif i == "sha256": pass
+        elif i == "md5":
+            md5_is_next = True
+        elif i == "sha256":
+            sha256_is_next = True
         else:
             output = os.sep.join( [ output, i ] )
-        if i == "md5": md5_is_next = True
-        elif i == "sha256": sha256_is_next = True
     return output
 
 def md5sha256( data ):
