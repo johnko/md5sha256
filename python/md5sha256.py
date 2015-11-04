@@ -30,7 +30,7 @@ import os
 def md5foldersha256file( data, output_base_path='.' ):
     '''
     Take data, in pass it to md5sha256, return md5 as a folder and sha256 as a file
-    Returns STRING, eg /md5/50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/sha256-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8
+    Returns STRING, eg /50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/5058f1af8388633f609cadb75a75dc9d-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8
     '''
     md5_is_next = False
     md5_hex_length = 32
@@ -41,11 +41,13 @@ def md5foldersha256file( data, output_base_path='.' ):
     for i in md5sha256( data ).split( "-" ):
         if md5_is_next:
             md5_as_path = os.sep.join( [ i[start:start+2] for start in range(0, md5_hex_length, 2) ] )
-            output = os.sep.join( [ output, md5_as_path ] )
+            output = os.sep.join( [ output, md5_as_path, i ] )
             md5_is_next = False
         elif sha256_is_next:
             output = "-".join( [ output, i ] )
             sha256_is_next = False
+        elif i == "md5": pass
+        elif i == "sha256": pass
         else:
             output = os.sep.join( [ output, i ] )
         if i == "md5": md5_is_next = True
@@ -74,13 +76,13 @@ def main():
     test_dot = "md5-5058f1af8388633f609cadb75a75dc9d-sha256-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
     compare_str_test( test_dot, md5sha256( "." ) )
 
-    test_path = "./md5/50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/sha256-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
+    test_path = "./50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/5058f1af8388633f609cadb75a75dc9d-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
     compare_str_test( test_path, md5foldersha256file( "." ) )
 
-    test_subpath = "./another/md5/50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/sha256-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
+    test_subpath = "./another/50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/5058f1af8388633f609cadb75a75dc9d-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
     compare_str_test( test_subpath, md5foldersha256file( ".", "./another" ) )
 
-    test_trailslash = "/another/sub/md5/50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/sha256-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
+    test_trailslash = "/another/sub/50/58/f1/af/83/88/63/3f/60/9c/ad/b7/5a/75/dc/9d/5058f1af8388633f609cadb75a75dc9d-cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
     compare_str_test( test_trailslash, md5foldersha256file( ".", "/another/sub//" ) )
 
 if __name__ == "__main__":
